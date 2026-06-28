@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
 
         for await (const state of streamEvents) {
           const nodeName = Object.keys(state)[0];
-          const nodeState = state[nodeName];
+          const nodeState = (state as any)[nodeName];
           
           await writer.write(
             encoder.encode(`data: ${JSON.stringify({ node: nodeName, ...nodeState })}\n\n`)
