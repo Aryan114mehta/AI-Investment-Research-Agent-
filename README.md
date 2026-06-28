@@ -42,8 +42,11 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 ---
 
 ### 4. 🔗 Deployed Website
+```bash
 
 https://investtai.netlify.app/
+
+```
 
 ## How It Works — Approach and Architecture
 
