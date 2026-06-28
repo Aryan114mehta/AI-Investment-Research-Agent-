@@ -29,6 +29,7 @@ export function StockChart({ ticker }: StockChartProps) {
 
     const widgetDiv = document.createElement("div");
     widgetDiv.className = "tradingview-widget-container__widget";
+    widgetDiv.style.height = "100%";
     containerRef.current.appendChild(widgetDiv);
 
     const script = document.createElement("script");
@@ -77,7 +78,7 @@ export function StockChart({ ticker }: StockChartProps) {
       <div
         ref={containerRef}
         className="tradingview-widget-container w-full"
-        style={{ height: 500 }}
+        style={{ height: "500px" }}
       />
     </div>
   );
