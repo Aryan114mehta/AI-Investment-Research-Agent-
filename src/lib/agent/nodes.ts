@@ -179,10 +179,10 @@ function checkValidity(name: string): "VALID" | "INVALID" {
 function getKnowledgeBaseFallback(
   companyName: string,
   rawData: string
-): { verdict: "GOOD" | "BAD"; analysis: string } {
+): { verdict: "GOOD" | "BAD" | "INVALID"; analysis: string } {
   const name = companyName.toLowerCase();
 
-  const db: Record<string, { verdict: "GOOD" | "BAD"; analysis: string }> = {
+  const db: Record<string, { verdict: "GOOD" | "BAD" | "INVALID"; analysis: string }> = {
     apple: {
       verdict: "GOOD",
       analysis: `### Pros\n- World's most valuable company with a fiercely loyal premium customer base.\n- Services segment (App Store, iCloud, Apple Pay) drives high-margin recurring revenue.\n- Exceptional free cash flow and aggressive share buyback program ($90B+ annually).\n\n### Growth Potential\n- Apple Intelligence (AI) integration into iOS/MacOS could drive a massive iPhone upgrade cycle.\n- India manufacturing expansion reduces China supply-chain risk and opens a huge new market.\n- Apple Vision Pro establishes a foothold in the emerging spatial computing category.\n\n### Risks\n- iPhone accounts for ~52% of revenue, creating concentration risk.\n- EU App Store regulation threatens the high-margin Services business.\n- US-China geopolitical tensions remain an ongoing supply chain and revenue risk.`,
