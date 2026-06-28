@@ -41,6 +41,10 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ---
 
+### 4. 🔗 Deployed Website
+
+https://investtai.netlify.app/
+
 ## How It Works — Approach and Architecture
 
 The application uses a modern **Next.js App Router** architecture with Server-Sent Events (SSE) for real-time streaming updates from the agent to the client.
