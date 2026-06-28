@@ -1,6 +1,9 @@
 import { NextRequest } from "next/server";
 import { createAgentGraph } from "@/lib/agent/graph";
 
+type StreamNodeState = Record<string, unknown>;
+type StreamState = Record<string, StreamNodeState>;
+
 export async function POST(req: NextRequest) {
   try {
     const { companyName } = await req.json();
@@ -22,9 +25,8 @@ export async function POST(req: NextRequest) {
       try {
         const streamEvents = await app.stream({ companyName, status: "Starting..." });
 
-        for await (const state of streamEvents) {
-          const nodeName = Object.keys(state)[0];
-          const nodeState = state[nodeName];
+        for await (const state of streamEvents as AsyncIterable<StreamState>) {
+          const [nodeName, nodeState] = Object.entries(state)[0];
           
           await writer.write(
             encoder.encode(`data: ${JSON.stringify({ node: nodeName, ...nodeState })}\n\n`)
@@ -32,10 +34,11 @@ export async function POST(req: NextRequest) {
         }
         
         await writer.write(encoder.encode(`event: close\ndata: {}\n\n`));
-      } catch (error: any) {
+      } catch (error: unknown) {
         console.error("Agent error:", error);
+        const message = error instanceof Error ? error.message : String(error);
         await writer.write(
-          encoder.encode(`data: ${JSON.stringify({ error: error.message || String(error) })}\n\n`)
+          encoder.encode(`data: ${JSON.stringify({ error: message })}\n\n`)
         );
       } finally {
         await writer.close();
@@ -50,7 +53,7 @@ export async function POST(req: NextRequest) {
       },
     });
 
-  } catch (error) {
+  } catch {
     return new Response(JSON.stringify({ error: "Invalid request" }), {
       status: 400,
       headers: { "Content-Type": "application/json" },

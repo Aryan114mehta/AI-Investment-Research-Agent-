@@ -179,7 +179,7 @@ function checkValidity(name: string): "VALID" | "INVALID" {
 function getKnowledgeBaseFallback(
   companyName: string,
   rawData: string
-): { verdict: "GOOD" | "BAD"; analysis: string } {
+): { verdict: "GOOD" | "BAD" | "INVALID"; analysis: string } {
   const name = companyName.toLowerCase();
 
   const db: Record<string, { verdict: "GOOD" | "BAD"; analysis: string }> = {
